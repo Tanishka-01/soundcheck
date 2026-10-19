@@ -1,0 +1,38 @@
+--- transcribe / no_docs / trial 1 ---
+PASS: ok (turns=6 cost=$0.2393879)
+--- transcribe / skill / trial 1 ---
+PASS: ok (turns=6 cost=$0.2052715)
+--- speakers / no_docs / trial 1 ---
+PASS: ok (turns=5 cost=$0.11600400000000001)
+--- speakers / skill / trial 1 ---
+PASS: ok (turns=8 cost=$0.2414424)
+--- streaming / no_docs / trial 1 ---
+PASS: ok (turns=16 cost=$0.3335545)
+--- streaming / skill / trial 1 ---
+INFRA_ERROR: claude CLI reported is_error (subtype=error_max_budget_usd api_error_status=None) (turns=13 cost=$0.5231140999999999)
+--- transcribe / no_docs / trial 2 ---
+PASS: ok (turns=5 cost=$0.1059823)
+--- transcribe / skill / trial 2 ---
+PASS: ok (turns=6 cost=$0.2029639)
+--- speakers / no_docs / trial 2 ---
+PASS: ok (turns=5 cost=$0.1221152)
+--- speakers / skill / trial 2 ---
+INFRA_ERROR: solution.py run matched /getaddrinfo failed/ (turns=10 cost=$0.3348636)
+--- streaming / no_docs / trial 2 ---
+PASS: ok (turns=18 cost=$0.4238867)
+--- streaming / skill / trial 2 ---
+PASS: ok (turns=9 cost=$0.37489649999999997)
+--- transcribe / no_docs / trial 3 ---
+PASS: ok (turns=5 cost=$0.1306135)
+--- transcribe / skill / trial 3 ---
+PASS: ok (turns=6 cost=$0.2038079)
+--- speakers / no_docs / trial 3 ---
+PASS: ok (turns=5 cost=$0.1103798)
+--- speakers / skill / trial 3 ---
+PASS: ok (turns=9 cost=$0.27262440000000004)
+--- streaming / no_docs / trial 3 ---
+PASS: ok (turns=14 cost=$0.35612029999999995)
+--- streaming / skill / trial 3 ---
+INFRA_ERROR: solution.py run matched /getaddrinfo failed/ (turns=9 cost=$0.36281729999999995)
+
+Wrote C:\D drive\soundcheck\results\summary.md and C:\D drive\soundcheck\results\runs.jsonl

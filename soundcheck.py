@@ -178,7 +178,7 @@ def grade(task_id: str, run_dir: Path, agent_result: dict, keywords: list[str]) 
     return res("pass", "ok", deprecated)
 
 
-def run_one(task_id: str, setup: str, trial: int, max_cost: float, model: str, keywords: list[str]) -> dict:
+def run_one(task_id: str, setup: str, trial: int, max_cost: float, model: str, keywords: list[str], batch: str = "main") -> dict:
     run_id = f"{task_id}_{setup}_{trial}_{uuid.uuid4().hex[:8]}"
     run_dir = Path(tempfile.mkdtemp(prefix=f"sc_{run_id}_"))
     shutil.copy(DATA / "sample.wav", run_dir / "sample.wav")
@@ -194,7 +194,7 @@ def run_one(task_id: str, setup: str, trial: int, max_cost: float, model: str, k
     (artifact_dir / "transcript.txt").write_text(redact(agent_result["stdout"], api_key), encoding="utf-8")
     (artifact_dir / "stderr.txt").write_text(redact(agent_result["stderr"], api_key), encoding="utf-8")
 
-    row = {"run_id": run_id, "task": task_id, "setup": setup, "trial": trial,
+    row = {"run_id": run_id, "task": task_id, "setup": setup, "trial": trial, "batch": batch,
            "status": g["status"], "reason": g["reason"], "deprecated_used": g["deprecated_used"],
            "credit_exhausted": g["credit_exhausted"], "used_skill": agent_result["used_skill"],
            "wall_time_s": agent_result["wall_time_s"], "cost_usd": agent_result["cost_usd"],
@@ -234,11 +234,12 @@ def main():
         raise SystemExit("ASSEMBLYAI_API_KEY is not set.")
     keywords = load_keywords()
     schedule = build_schedule(args.trials)[:1] if args.single else build_schedule(args.trials)
+    batch_label = "sanity_check" if args.single else "main"
 
     rows = []
     for task_id, setup, trial in schedule:
         print(f"--- {task_id} / {setup} / trial {trial} ---")
-        row = run_one(task_id, setup, trial, args.max_cost, args.model, keywords)
+        row = run_one(task_id, setup, trial, args.max_cost, args.model, keywords, batch=batch_label)
         rows.append(row)
         print(f"{row['status'].upper()}: {row['reason']} (turns={row['num_turns']} cost=${row['cost_usd']})")
         if row["status"] == "infra_error" and row["credit_exhausted"]:

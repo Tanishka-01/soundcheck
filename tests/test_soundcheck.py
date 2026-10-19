@@ -187,12 +187,32 @@ def test_run_one_with_fake_agent_writes_jsonl_and_artifacts(tmp_path, keywords, 
     row = sc.run_one("transcribe", "no_docs", 1, max_cost=1.0, model="claude-sonnet-5", keywords=keywords)
 
     assert row["status"] == "pass"
+    assert row["batch"] == "main"  # default when the caller doesn't say otherwise
     jsonl = (tmp_path / "results" / "runs.jsonl").read_text(encoding="utf-8").strip().splitlines()
     assert len(jsonl) == 1
     assert json.loads(jsonl[0])["run_id"] == row["run_id"]
+    assert json.loads(jsonl[0])["batch"] == "main"
     artifact = Path(row["artifact_dir"])
     assert (artifact / "solution.py").exists()
     assert (artifact / "transcript.txt").exists()
+
+
+def test_run_one_records_sanity_check_batch_label(tmp_path, keywords, monkeypatch):
+    monkeypatch.setattr(sc, "RESULTS", tmp_path / "results")
+    monkeypatch.setattr(sc, "DATA", tmp_path / "data")
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "sample.wav").write_bytes(b"fake")
+
+    def fake_run_agent(task_id, setup, run_dir, max_cost, model):
+        (run_dir / "solution.py").write_text(
+            "import json; print(json.dumps({'text': 'the offsite budget mountain'}))", encoding="utf-8"
+        )
+        return fake_agent_result()
+
+    monkeypatch.setattr(sc, "run_agent", fake_run_agent)
+    row = sc.run_one("transcribe", "no_docs", 1, max_cost=1.0, model="claude-sonnet-5",
+                      keywords=keywords, batch="sanity_check")
+    assert row["batch"] == "sanity_check"
 
 
 def test_run_one_never_calls_real_claude_binary(monkeypatch, tmp_path, keywords):

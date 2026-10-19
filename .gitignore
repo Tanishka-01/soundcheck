@@ -3,7 +3,11 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-results/
 vendor/
 .pytest_cache/
 data/_turns/
+
+# results/ is published (see results/README.md) -- but never any
+# credentials copy, temp venv, or cache that might land under it
+**/.credentials.json
+**/cc_cfg_*/

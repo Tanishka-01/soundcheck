@@ -39,9 +39,10 @@ docs and that the sample audio diarizes into exactly 2 speakers.
 - 1 `streaming`/`skill` run did not finish within budget (13 turns, hit
   my own `--max-cost 0.5` cap) before producing a final `solution.py`.
 
-Average cost per run: **$0.24 (`no_docs`) vs $0.30 (`skill`)** — a
-difference of about $0.06/run. `skill` runs loaded more context per turn
-despite using slightly fewer turns on average (8.4 vs 9.3).
+Average cost per run (18 `main`-batch runs only, excluding the sanity
+check): **$0.22 (`no_docs`) vs $0.30 (`skill`)** — a difference of about
+$0.08/run. `skill` runs loaded more context per turn despite using
+slightly fewer turns on average (8.8 vs 8.4).
 
 ## What this suggests
 
