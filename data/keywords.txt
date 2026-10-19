@@ -1,0 +1,12 @@
+offsite
+quarter
+mountain
+lodge
+hiking
+cooking
+trivia
+workshops
+remote
+travel
+survey
+budget

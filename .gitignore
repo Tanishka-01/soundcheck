@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+results/
+vendor/
+.pytest_cache/
+data/_turns/
