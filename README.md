@@ -6,6 +6,8 @@ without the official [AssemblyAI skill](https://github.com/AssemblyAI/assemblyai
 Built as portfolio proof for an "Agent Experience" engineering role at
 AssemblyAI. The goal is an honest answer, not a flattering one.
 
+**Results of the real 18-run batch are in [FINDINGS.md](FINDINGS.md).**
+
 ## What it measures
 
 3 tasks x 2 setups x 3 trials = 18 runs, one at a time, interleaved (not
