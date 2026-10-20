@@ -96,11 +96,10 @@ SDK's own migration guide.
   implementation approaches (SDK vs raw websocket) before settling on
   one — being more prescriptive about a single recommended streaming
   path might reduce that.
-- In my own harness: give the hardest cell (`streaming` + `skill`) a
-  higher `--max-cost` than the rest — it has the highest average cost
-  per run ($0.42) and the single most expensive run ($0.52, the one
-  that hit the cap), even though `streaming`/`no_docs` actually used
-  more turns on average (16.0 vs 10.3) at lower cost per turn.
+- In my own harness: give `streaming` + `skill` a higher `--max-cost`
+  than the rest — of the six (task, setup) cells, it has the highest
+  average cost per run ($0.42) and contains the one run that hit the
+  $0.50 cap.
 
 ## Limitations
 
