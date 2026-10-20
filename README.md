@@ -73,7 +73,7 @@ Put your key in `.env`:
 ASSEMBLYAI_API_KEY=your_key_here
 ```
 
-25 offline tests of the grading logic first (no key, no real `claude` calls):
+26 offline tests of the grading logic first (no key, no real `claude` calls):
 ```powershell
 .venv\Scripts\python -m pytest tests/ -v
 ```
