@@ -1,12 +1,21 @@
 # Soundcheck
 
-Does Claude Code integrate AssemblyAI correctly on the first try, with vs
-without the official [AssemblyAI skill](https://github.com/AssemblyAI/assemblyai-skill)?
+Tests whether Claude Code integrates the AssemblyAI API correctly on the
+first try, with vs without the official
+[AssemblyAI skill](https://github.com/AssemblyAI/assemblyai-skill).
 
-Built as portfolio proof for an "Agent Experience" engineering role at
-AssemblyAI. The goal is an honest answer, not a flattering one.
+## Result in brief
 
-**Results of the real 18-run batch are in [FINDINGS.md](FINDINGS.md).**
+- Ran 18 real attempts: 3 tasks, each with and without the official
+  skill, 3 trials per combination.
+- Every run that completed produced working code either way — pass/fail
+  did not differ between setups.
+- The skill's clearest effect: every streaming solution it touched
+  pinned a specific, very recent model name (the no-skill runs usually
+  didn't), and it leaned toward AssemblyAI's current SDK class name
+  over an older one.
+- n=3 per cell and synthetic test audio mean this is a directional
+  signal, not a proven result. Full write-up: [FINDINGS.md](FINDINGS.md).
 
 ## What it measures
 
@@ -41,9 +50,10 @@ against live docs on 2026-10-17 (not training data): the singular
 `speech_models`), legacy bare model names (`"best"`, `"universal"`), and
 the old `v2/realtime/ws` streaming endpoint.
 
-Runs that hit a rate limit, network error, or exhausted AssemblyAI credits
-are tagged `infra_error` and excluded from the pass rate — they are not
-held against the agent. The batch stops early if credits run out.
+Runs that hit a rate limit, network error, exhausted AssemblyAI credits,
+or ran out of the per-run `--max-cost` budget are all tagged `infra_error`
+and excluded from the pass rate — they are not held against the agent.
+The batch stops early if credits run out.
 
 ## Sample audio
 
@@ -103,7 +113,7 @@ touches disk).
   on the first network call of a fresh process — it happened twice in
   the real batch, and both times, re-running the exact same flagged
   `solution.py` unmodified passed cleanly right after. That flakiness
-  looks specific to this box, not AssemblyAI or Claude.
+  looks specific to my environment, not AssemblyAI or Claude.
 - **The infra-error classifier itself needed a fix mid-project.** An
   earlier version matched Claude Code's own benign internal
   `"rate_limit_event"` usage-tracking telemetry (present in every session,

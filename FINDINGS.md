@@ -38,6 +38,9 @@ docs and that the sample audio diarizes into exactly 2 speakers.
   DNS issue on my machine, not an AssemblyAI or Claude problem.
 - 1 `streaming`/`skill` run did not finish within budget (13 turns, hit
   my own `--max-cost 0.5` cap) before producing a final `solution.py`.
+  The harness tags this `infra_error` too (reason `error_max_budget_usd`),
+  but it's called out separately here because it reflects my own budget
+  and task difficulty, not an environment failure like the DNS cases above.
 
 Average cost per run (18 `main`-batch runs only, excluding the sanity
 check): **$0.22 (`no_docs`) vs $0.30 (`skill`)** — a difference of about
